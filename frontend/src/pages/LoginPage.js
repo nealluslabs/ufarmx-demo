@@ -81,7 +81,7 @@ export default function RoleSelectionPage() {
                   boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                   textAlign: 'center',
                   cursor: 'pointer',
-                  border: role.label === 'Admin' ? '2px solid #90C434' : '2px solid transparent',
+                  border:  '2px solid transparent',
                   transition: 'all 0.3s ease-in-out',
                   '&:hover': {
                     border: '2px solid #90C434',
@@ -102,7 +102,7 @@ export default function RoleSelectionPage() {
                     sx={{
                       fontSize: '1.4rem',
                       mb: 1,
-                      backgroundColor: '#90C43433', // Correct 20% opacity of #90C434
+                      backgroundColor: "#f0fcea" /*'#90C43433'*/, // Correct 20% opacity of #90C434
                       padding: '0.2rem',
                       paddingLeft:"0.4rem",
                       paddingRight:"0.4rem",
