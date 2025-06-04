@@ -1,0 +1,200 @@
+import React,{useState,useEffect} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import LockIcon from '@mui/icons-material/Lock';
+import { Divider, Chip, Grid, Paper, Typography, Box, Avatar, Button, ButtonBase, Stack, 
+  ToggleButton, ToggleButtonGroup, Hidden  } from '@mui/material';
+import { useDispatch,useSelector } from 'react-redux';
+import {fetchDepositsForContainer} from 'src/redux/actions/group.action'
+
+import { useNavigate } from 'react-router-dom';
+import redboy from 'src/assets/images/redboy.jpeg';
+
+//import { setRequestedSection,savePresentOpenChapter } from 'src/redux/reducers/group.slice';
+
+
+
+//import {SlideDown} from 'react-slidedown'
+//import 'react-slidedown/lib/slidedown.css'
+//
+//import ChapterCard from   'src/components/chapters/chapter-card';
+//import ExamCard from   'src/components/chapters/exam-card';
+//import { populate } from 'react-redux-firebase';
+//import QuizCard from '../chapters/quiz-card';
+//import PastExamCard from '../chapters/pastExam-card';
+
+
+const useStyles = makeStyles((theme) => ({
+  row: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    gap:'0.5rem',
+    //backgroundColor:'#F9F9F9',
+    backgroundColor:'transparent',
+    //border:'1px solid lightgrey',
+    borderRadius:'1rem',
+    width: '100%',
+    position:"relative",
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    flexDirection:'row',
+   
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'row', // Change to column for small screens and below
+    },
+  },
+  text: {
+   // width: '80%',
+    color: 'grey',
+  },
+  buttonSpacer: {
+    /*display: 'flex',
+    flexDirection:'column',
+    alignItems: 'center',
+    justifyContent:'center',
+    gap:'20px',*/
+    position:"absolute",
+    bottom:"1.5rem",
+    right:"-0.5rem"
+  },
+  button: {
+    width: '20%',
+    marginLeft: 'auto',
+  },
+  collection: {
+    fontWeight: 500,
+    fontSize: '1rem', // Default for larger screens
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1rem', // Smaller font for small screens
+      marginTop: '1rem', // Add margin top for small screens
+      marginBottom: '1rem', // Add margin bottom for small screens
+    },
+  },
+
+}));
+
+const ContainerCardSmall = ({data,index,user,pic,collection,about,signed,containerName}) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+//  const { allSectionVideos,requestedSection } = useSelector((state) => state.group);
+//    const { categoryChapters,presentOpenChapter,subjectPastExams} = useSelector((state) => state.group);
+   // const { user} = useSelector((state) => state.auth);
+
+
+  const dummyData = [
+    {uid: 1, title: "General (16 mins)", desc: "Lorem ipsum dolor sit amet consectetur tesdsjk. Eget cursus..."},
+    {uid: 2, title: "Public (11 mins)", desc: "Tetsla ipsum dolor sit amet consectetur tesdsjk. Eget cursus..."},
+    {uid: 3, title: "Future (39 mins)", desc: "Lorem ipsum dolor sit amet consectetur tesdsjk. Eget cursus..."},
+];
+
+  
+  const [loading,setLoading] =useState(false)
+  const [wait,setWait] =useState(false)
+  const [dropDown, setDropDown] = useState(false);
+  const [categoryData,setCategoryData] = useState(/*categoryChapters?categoryChapters:dummyData*/) 
+
+  //console.log("THE VIDEO ID IS",dummyData[0].uid)
+  console.log(" SUBJECT CARD  CHECK !!!!- - -",data)
+  
+
+  useEffect(()=>{ 
+    //this code is responsible for the right section appearing in the dropdown
+  //  if(presentOpenChapter !== data.uid){setTimeout(()=>{setDropDown(false)},300)}
+  // 
+  //     setTimeout(()=>{setCategoryData(categoryChapters)},600)
+
+    },[/*categoryChapters,presentOpenChapter*/])
+
+
+    const fetchChaptersAndDropDown  = (id)=> {
+      console.log("ID BEING PASSED IN IS",id)
+ if(!dropDown){
+      setLoading(true)
+   //   dispatch(fetchSubjectChapters(id))
+   //   dispatch(savePresentOpenChapter(id))
+      console.log("I WANNA SEE CATEGORY CAHPTERS", categoryData)
+     setTimeout(()=>{setLoading(false);setDropDown(true)},600)
+     }
+     else{
+       setDropDown(false)
+     }
+
+
+    }
+
+    const populateEditSubject = (identity)=>{
+
+      setWait(true)
+    //  dispatch(fetchSubjectInfo(identity))
+
+     //setTimeout(()=> {navigate('/dashboard/edit-subject',{state:{uid:identity}})}, 1500)
+    }
+
+
+
+  return (
+    <>
+    <div className={classes.row}>
+      
+      <div className={classes.text}>
+        <div style={{ color: 'black',display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"flex-start" }}>
+          {/*<b>{ `${index + 1}.) `} {data && data.title} </b>*/}
+          <img src={pic} style={{marginLeft:"0rem",marginBottom:"1rem",height:"5rem",width:"10rem",borderRadius:"0.5rem"}} alt="container image"/>
+        </div>
+
+      
+
+      </div>
+
+
+      <div style={{ display:"flex",flexDirection:"column",justifyContent:{xs:'center',md:'flex-start'},gap:"1px" ,width:"40%",paddingLeft:{xs:"0rem",lg:"0rem"}}}>
+          
+          <div style={{fontWeight:"500",fontSize:"0.5rem",marginBottom:"-0.2rem"}}> {about} </div>
+          <div className={classes.collection} > {collection} </div>
+          <div  style={{fontWeight:"500",fontSize:"0.5rem",marginTop:"-0.2rem"}}> {signed}  </div>
+
+
+        </div>
+
+     {
+      <div className={classes.buttonSpacer}>
+      
+
+            <Button
+      
+      style={{
+      
+        color:'#90C434',
+       fontWeight:"400",
+       fontSize:"0.8rem"
+       
+      }}
+
+      onClick={() => {
+        //navigate('/dashboard/container-profile')
+       setLoading(true)
+        dispatch(fetchDepositsForContainer(containerName,navigate))
+        setTimeout(()=>{setLoading(false)},3000)
+       }}
+     
+    >
+      {loading?'loading..':'View'}
+    </Button>
+   
+
+
+       </div>
+      }
+           
+    </div>
+
+
+
+     </>
+  );
+};
+
+export default ContainerCardSmall;
