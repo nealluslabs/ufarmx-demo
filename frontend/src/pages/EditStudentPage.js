@@ -17,7 +17,7 @@ export default function EditStudentPage() {
   const studentData = location.state?.student;
   const [loading, setLoading] = useState(false);
 
-  
+   
   
  
   useEffect(()=>{
